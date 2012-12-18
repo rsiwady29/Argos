@@ -1,0 +1,641 @@
+import java.util.Date;
+
+import com.google.gwt.dom.client.Style.FontStyle;
+import com.google.gwt.dom.client.Style.FontWeight;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DateBox;
+
+public class Global {
+	
+    private static DialogBox createDialogBox(String caption, String msg) {
+	    // Create a dialog box and set the caption text
+	    final DialogBox dialogBox = new DialogBox();
+	    dialogBox.ensureDebugId("cwDialogBox");
+	    dialogBox.setText(caption);
+
+	    // Create a table to layout the content
+	    VerticalPanel dialogContents = new VerticalPanel();
+	    dialogContents.setSpacing(4);
+	    dialogBox.setWidget(dialogContents);
+	    
+	    HTML details = new HTML("<b>"+msg+"</b>");
+	    dialogContents.add(details);
+	    dialogContents.setCellHorizontalAlignment(
+	        details, HasHorizontalAlignment.ALIGN_CENTER);
+
+	    // Add a close button at the bottom of the dialog
+	    Button closeButton = new Button();
+	    closeButton.setText("Close");
+	    closeButton.addClickHandler(new ClickHandler() {
+	          public void onClick(ClickEvent event) {
+		            dialogBox.hide();
+		          }
+		        });
+	    dialogContents.add(closeButton);
+
+	    // Return the dialog box
+	    return dialogBox;
+	  }
+	
+    public static void Msgbox(String caption, String message)
+    {
+    	DialogBox dialogBox = createDialogBox(caption,message);
+        dialogBox.setGlassEnabled(true);
+        dialogBox.setAnimationEnabled(true);
+        dialogBox.center();
+        dialogBox.show();   
+    }
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in">    
+    
+    public static void SetFontBackground(Widget w, String color)
+    {
+        w.getElement().getStyle().setBackgroundColor("#"+color);
+    }
+    
+    public static String GetFontBackground(Widget d)
+    {
+    	return getHexColor(DOM.getStyleAttribute(d.getElement(), "color"));
+        //return d.getElement().getStyle().getBackgroundColor();
+    }
+    
+    public static void SetFontForeground(Widget c, String color)
+    {
+    	DOM.setStyleAttribute(c.getElement(), "color", "#"+color);
+        //c.getElement().getStyle().setColor(color);
+    }
+    
+    private static String getHexColor(String color)
+    {
+    	color = color.substring(4,color.length()-1).replaceAll(" ", "");
+    	String valor1 = color.substring(0, color.indexOf(','));
+    	String valor1_ = color.substring(color.indexOf(',')+1, color.length()); 
+    	String valor2 = valor1_.substring(0, valor1_.indexOf(','));
+    	String valor3 = color.substring(color.lastIndexOf(',')+1,color.length());
+    	valor1 = Integer.toHexString(Integer.parseInt(valor1));
+    	valor2 = Integer.toHexString(Integer.parseInt(valor2));
+    	valor3 = Integer.toHexString(Integer.parseInt(valor3));
+    	if(valor1.length() == 1)
+    		valor1 = "0"+valor1;
+    	if(valor2.length() == 1)
+    		valor2 = "0"+valor2;
+    	if(valor3.length() == 1)
+    		valor3 = "0"+valor3;
+    	return valor1+valor2+valor3;
+    }
+    
+    public static String GetFontForeground(Widget c)
+    {
+    	return getHexColor(DOM.getStyleAttribute(c.getElement(), "color"));    	
+    }
+    
+    public static void SetFontSize(Widget c, int size)
+    {
+    	c.getElement().getStyle().setFontSize(size, Unit.PX);
+    }
+    
+    public static int GetFontSize(Widget c)
+    {
+    	String temp = c.getElement().getStyle().getFontSize();
+        return Integer.parseInt(temp.substring(0, temp.length()-2));
+    }
+    
+    public static void SetFontFamily(Widget c, String family)
+    {
+    	DOM.setStyleAttribute(c.getElement(), "font-family", family);
+    }
+    
+    public static String GetFontFamily(Widget c)
+    {
+    	return DOM.getStyleAttribute(c.getElement(), "font-family");
+    }
+    
+    public static void SetFontStyle(Widget c, int style)
+    {
+        switch(style)
+        {                
+            case java.awt.Font.ITALIC | java.awt.Font.BOLD:
+                c.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
+                c.getElement().getStyle().setFontWeight(FontWeight.BOLD);
+                break;
+            case java.awt.Font.ITALIC:
+            	c.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
+                break;
+            case java.awt.Font.BOLD:
+            	c.getElement().getStyle().setFontWeight(FontWeight.BOLD);
+                break;
+            default:
+            	c.getElement().getStyle().setFontStyle(FontStyle.NORMAL);
+                break;
+        }
+    }
+    
+    public static int GetFontStyle(Widget c)
+    {    	
+        if(FontStyle.valueOf(c.getElement().getStyle().getFontStyle()) == FontStyle.ITALIC && FontWeight.valueOf(c.getElement().getStyle().getFontWeight()) == FontWeight.BOLD)
+        {
+        	return java.awt.Font.ITALIC | java.awt.Font.BOLD;
+        }        
+        else if(FontStyle.valueOf(c.getElement().getStyle().getFontStyle()) == FontStyle.ITALIC)
+        {
+        	return java.awt.Font.ITALIC;
+        }
+        else if(FontWeight.valueOf(c.getElement().getStyle().getFontWeight()) == FontWeight.BOLD)
+        {
+        	return java.awt.Font.BOLD;
+        }
+        else
+        {
+        	return java.awt.Font.PLAIN;
+        }
+    }
+    
+    public static int GetDay()
+    {
+        Date date = new Date();
+        return date.getDay();
+    }
+    public static int GetMonth()
+    {
+        Date date = new Date();
+        return date.getMonth();
+    }
+    public static int GetYear()
+    {
+        Date date = new Date();
+        return date.getYear();
+    }
+    public static Date GetDate()
+    {
+        return new Date();
+    }
+    
+    public static String BooleanToString(boolean b) 
+    {
+        if (b) {
+            return "True";
+        }
+        return "False";
+    }
+
+    public static boolean StringToBoolean(String s) 
+    {
+        if (s.equals("True")) {
+            return true;
+        }
+        return false;
+     }
+
+    public static char StringToChar(String c)
+    {
+        char a = c.charAt(0);
+        return a;
+    }
+    
+    public static Date StringToDate(String c)
+    {
+        Date fecha=new Date();
+        String dia = c.charAt(0)+""+c.charAt(1);
+        String mes = c.charAt(2)+""+c.charAt(3);
+        String anio = c.charAt(4)+""+c.charAt(5)+""+c.charAt(6)+""+c.charAt(7);
+        int dian= StringToInt(dia);
+                int mesn= StringToInt(mes);
+                        int anion= StringToInt(anio);
+        fecha.setDate(dian);
+        fecha.setMonth(mesn);
+        fecha.setYear(anion);
+        
+                return fecha;
+    }    
+   
+   public static float StringToFloat(String valor)
+   {       
+       return Float.parseFloat(valor);       
+   }
+    
+   
+   public static int StringToInt(String valor)
+   {
+       return Integer.parseInt(valor);
+   }
+   
+    
+    public static int CharToInt(char c)
+    {
+        int n = c-48;
+        return n;
+    }
+    
+    
+    public static String CharToString(char c)
+    {
+        String n  = ""+c+"";
+        return n;        
+    }
+        
+    
+    public static String DateToString(Date d) 
+    {
+        return d.toString();
+    }
+
+
+    public static int FloatToInt(float valor)
+    {
+        
+        return (int)Math.round(valor);
+    }    
+    
+    public static String FloatToString(float valor)
+    {
+        return String.valueOf(Math.round(valor));
+    }    
+    
+
+    public static float IntegerToFloat(int valor)
+    {
+        float v=(float) (valor*1.0);
+        return v;
+    }    
+    
+    
+    
+    public static String IntegerToString(int valor)
+    {
+        
+        return String.valueOf(valor);
+    }    
+    
+              
+    
+    public static boolean IntegerToBoolean(Integer i) 
+    {
+        if (i == 0) {
+            return false;    
+        }
+        return true;
+    }    
+   
+    
+    
+    public static char IntegerToChar(int c)
+    {
+        char p=' ';
+       if (c >= 0 && c <= 9) {
+         p= Character.forDigit(c, 10);
+        
+        }
+       return p;
+    }    
+    
+           
+    //</editor-fold>
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de Control">        
+    public static String GetBorderColor(Widget c) {        
+        return getHexColor(c.getElement().getStyle().getBorderColor());
+    }
+    public static void SetBorderColor(Widget c,String borderColor) {
+        c.getElement().getStyle().setBorderColor("#"+borderColor);
+    }
+
+    public static boolean IsEnabled(Widget w) {
+        if(w instanceof Button)
+        {
+        	return ((Button)w).isEnabled();
+        }
+        else if(w instanceof CheckBox)
+        {
+        	return ((CheckBox)w).isEnabled();
+        }
+        else if(w instanceof ListBox)
+        {
+        	return ((ListBox)w).isEnabled();
+        }  
+        else if(w instanceof DateBox)
+        {
+        	return ((DateBox)w).isEnabled();
+        }  
+        else if(w instanceof RadioButton)
+        {
+        	return ((RadioButton)w).isEnabled();
+        } 
+        else if(w instanceof TextBox)
+        {
+        	return ((TextBox)w).isEnabled();
+        } 
+        return true;
+    }
+
+    public static void SetEnabled(Widget w,boolean enabled) {
+    	if((w instanceof com.google.gwt.user.client.ui.Label) || (w instanceof AbsolutePanel) || (w instanceof Image))
+        {
+        }
+        else if(w instanceof Button)
+        {
+        	((Button)w).setEnabled(enabled);
+        }
+        else if(w instanceof CheckBox)
+        {
+        	((CheckBox)w).setEnabled(enabled);
+        }
+        else if(w instanceof ListBox)
+        {
+        	((ListBox)w).setEnabled(enabled);
+        }  
+        else if(w instanceof DateBox)
+        {
+        	((DateBox)w).setEnabled(enabled);
+        }  
+        else if(w instanceof RadioButton)
+        {
+        	((RadioButton)w).setEnabled(enabled);
+        } 
+        else if(w instanceof TextBox)
+        {
+        	((TextBox)w).setEnabled(enabled);
+        }
+    }
+
+    public static boolean IsVisible(Widget w) {
+        return w.isVisible();
+    }
+
+    public static void SetVisible(Widget w,boolean visible) {
+        w.setVisible(visible);
+    }
+
+    public static int GetHeight(Widget w) {
+        return w.getOffsetHeight();
+    }
+    
+    public static void SetHeight(Widget w, int height) {
+        w.setHeight(height+"px");
+    }
+
+    public static int GetTabIndex(Widget w) {
+        return w.getElement().getTabIndex();
+    }
+
+    public static void SetTabIndex(Widget w,int tabIndex) {
+        w.getElement().setTabIndex(tabIndex);
+    }
+
+    public static int GetWidth(Widget w) {
+        return w.getOffsetWidth();
+    }
+    
+    public static void SetWidth(Widget w, int width) {
+        w.setWidth(width+"px");
+    }
+
+    public static int GetX(Widget w) {
+        return w.getAbsoluteLeft();
+    }
+
+    public static void SetX(Widget w,int x) {
+    	RootPanel.get().setWidgetPosition(w, x, w.getAbsoluteTop());
+    }
+
+    public static int GetY(Widget w) {
+        return w.getAbsoluteTop();
+    }
+
+    public static void SetY(Widget w,int y) {
+    	RootPanel.get().setWidgetPosition(w, w.getAbsoluteLeft(), y);
+    }
+ // </editor-fold>     
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de Boton">    
+
+    public static String GetValue(Button btn) 
+    {
+       return btn.getText(); 
+    }
+
+    public static void SetValue(Button btn,String value) {
+        btn.setText(value);
+    }           
+     // </editor-fold>    
+    
+
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de CheckBox">         
+    
+    public static int GetDirection(CheckBox c) {
+        //to do
+       return 1;
+    }
+
+    public static void SetDirection(CheckBox c,int direction) { //0 es izquierdo y 1 es derecho
+        
+    }
+
+    public static String GetText(CheckBox c) {
+        return c.getText();
+    }
+
+    public static void SetText(CheckBox c,String text) {
+        c.setText(text);
+    }
+
+	public static boolean IsChecked(CheckBox c) {
+        return c.getValue();   
+    }
+
+    public static void SetChecked(CheckBox c,boolean checked) {
+        c.setValue(checked);
+    }    
+    
+   // </editor-fold> 
+    
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de Combobox">        
+    public static String[] GetItems(ListBox cmb) 
+    {        
+    	String[] array = new String[cmb.getItemCount()];
+    	for(int i=0; i<cmb.getItemCount(); i++)
+    	{
+    		array[0] = cmb.getItemText(i);
+    	}
+    	return array;
+    }
+
+    public static void SetItems(ListBox cmb,String[] items) 
+    {
+    	cmb.clear();
+        for(int i=0;i<items.length;i++)
+        {
+            cmb.addItem(items[i]);
+        }
+    }
+
+    public static int GetSelectedIndex(ListBox cmb) 
+    {
+       return cmb.getSelectedIndex();              
+    }
+
+    public static void SetSelectedIndex(ListBox cmb,int selectedIndex) 
+    {        
+        cmb.setSelectedIndex(selectedIndex);
+    }
+
+ 
+    public static void SetSelectedItem(ListBox cmb,String text) 
+    {
+    	int i=0;
+        for(i=0; i<cmb.getItemCount(); i++)
+        {
+        	if(cmb.getItemText(i).equals(text))
+        		break;        	
+        }
+		cmb.setSelectedIndex(i);
+    }
+    
+    public static String GetSelectedItem(ListBox cmb) 
+    {
+    	return cmb.getItemText(cmb.getSelectedIndex());
+    }        
+    
+    
+    // </editor-fold>     
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de DatePicker">            
+    public static String GetDateFormat(DateBox d) {
+    	return "";
+    }
+
+    public static void SetDateFormat(DateBox d,String dateFormat) {
+    	d.setFormat(new DateBox.DefaultFormat
+    			(DateTimeFormat.getFormat(dateFormat))); 
+    }
+
+    public static Date GetMinValue(DateBox d) {
+        return d.getDatePicker().getFirstDate();
+    }
+
+    public static void SetMinValue(DateBox d, Date minValue) {
+        
+    }
+
+    public static Date GetValue(DateBox d) {
+        return d.getValue();
+    }
+    
+    public static void SetValue(DateBox d, Date value) {
+        d.setValue(value);
+    }
+    
+// </editor-fold>    
+
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de Label">            
+     public static String GetValue(com.google.gwt.user.client.ui.Label l) {
+        return l.getText();
+    }
+
+    public static void SetValue(com.google.gwt.user.client.ui.Label l,String value) {
+        l.setText(value);
+    }    
+    
+// </editor-fold>   
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de Picture">                
+    public static String GetPath(Image i) {
+        return i.getUrl();
+    }
+
+    public static void SetPath(Image i, String path) {
+        i.setUrl(path);
+    }
+
+    public static int GetSizeType(Image i) {
+        return 0;
+    }
+
+    public static void SetSizeType(Image i, int sizeType) {
+        
+    }    
+
+    
+ // </editor-fold>   
+    
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de RadioButton">                    
+  
+    public static int GetDirection(RadioButton r) {
+        return 1;
+    }
+
+    public static void SetDirection(RadioButton r,int direction) { //0 es izquierdo y 1 es derecho
+        
+    }
+
+    public static String GetText(RadioButton r) {
+        return r.getText();
+    }
+
+    public static void SetText(RadioButton r,String text) {
+       r.setText(text);
+    }
+
+    public static boolean IsChecked(RadioButton r) {
+        return r.getValue();
+    }
+
+    public static void SetChecked(RadioButton r,boolean checked) {
+      r.setValue(checked);
+    }
+    
+    //</editor-fold>
+    
+    
+    
+ 
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de Textbox">                
+    public static boolean IsReadOnly(TextBox t) {
+        return t.isReadOnly();
+    }
+
+    public static void SetReadOnly(TextBox t,boolean readOnly) {
+        t.setReadOnly(readOnly);
+    }
+ 
+
+    public static String GetValue(TextBox t) {
+        return t.getText();
+    }
+
+    public static void SetValue(TextBox t,String value) {
+        t.setText(value);
+    }
+    
+    //</editor-fold> 
+    
+    public static String GetTitle() {
+        return Window.getTitle();
+    }
+
+    public static void SetTitle(String title) {
+        Window.setTitle(title);
+    }
+    
+}

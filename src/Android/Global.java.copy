@@ -1,0 +1,698 @@
+//import Semantics.Objects.Object;
+import java.util.Date;
+//import Semantics.Objects.*;
+import java.util.ArrayList;
+
+import android.os.Bundle;
+import android.app.*;
+import android.content.*;
+import android.graphics.*;
+import android.view.*;
+import android.view.ViewGroup.LayoutParams;
+import android.view.View.*;
+import android.widget.AdapterView.*;
+import android.widget.CompoundButton.*;
+import android.widget.*;
+
+
+
+//TO DO: Msgbox, OpenWindow, 
+
+/**
+ *
+ * @author usuario
+ */
+public class Global{
+    public static void Msgbox(Context context, String caption, String message)
+    {
+    	String text = caption + ": " + message;
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in">    
+    public static void OpenWindow(Context context, Class window)
+    {
+        Intent intent = new Intent(context, window);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+    
+    public static void SetFontBackground(Object c, String color)
+    {
+        //NO HAY 
+    }
+    
+    public static String GetFontBackground(Object c)
+    {
+        return "";
+    }
+    
+    private static int getColor(String color){
+    	
+    	if(color.equals("ff000000"))
+    		return Color.BLACK;
+    	if(color.equals("ff0000ff"))
+    		return Color.BLUE;
+    	if(color.equals("ff00ffff"))
+    		return Color.CYAN;
+    	if(color.equals("ff444444"))
+    		return Color.DKGRAY;
+    	if(color.equals("ff888888"))
+    		return Color.GRAY;
+    	if(color.equals("ff00ff00"))
+    		return Color.GREEN;
+    	if(color.equals("ff000000"))
+    		return Color.LTGRAY;
+    	if(color.equals("ffcccccc"))
+    		return Color.LTGRAY;
+    	if(color.equals("ffff00ff"))
+    		return Color.MAGENTA;
+    	if(color.equals("ffff0000"))
+    		return Color.RED;
+    	if(color.equals("00000000"))
+    		return Color.TRANSPARENT;
+    	if(color.equals("ffffffff"))
+    		return Color.WHITE;
+    	if(color.equals("ffffff00"))
+    		return Color.YELLOW;
+    	
+    	return Color.TRANSPARENT;
+    }
+    
+    public static void SetFontForeground(Object c, String color)
+    {
+        if(c instanceof Button)
+        	((Button)c).setTextColor(getColor(color));
+        if(c instanceof RadioButton)
+        	((RadioButton)c).setTextColor(getColor(color));
+        if(c instanceof CheckBox)
+        	((CheckBox)c).setTextColor(getColor(color));
+        if(c instanceof EditText)
+        	((EditText)c).setTextColor(getColor(color));
+        if(c instanceof EditText)
+        	((EditText)c).setTextColor(getColor(color));
+        if(c instanceof TextView)
+        	((TextView)c).setTextColor(getColor(color));
+        
+    }
+    
+    public static String GetFontForeground(Object c)
+    {
+    	if(c instanceof Button)
+        	return Integer.toHexString(((Button)c).getTextColors().getDefaultColor());
+        if(c instanceof RadioButton)
+        	return Integer.toHexString(((RadioButton)c).getTextColors().getDefaultColor());
+        if(c instanceof CheckBox)
+        	return Integer.toHexString(((CheckBox)c).getTextColors().getDefaultColor());
+        if(c instanceof EditText)
+        	return Integer.toHexString(((EditText)c).getTextColors().getDefaultColor());
+        if(c instanceof EditText)
+        	return Integer.toHexString(((EditText)c).getTextColors().getDefaultColor());
+        if(c instanceof TextView)
+        	return Integer.toHexString(((TextView)c).getTextColors().getDefaultColor());
+        
+        return "00000000";
+    }
+    
+    public static void SetFontSize(Object c, int size)
+    {
+    	if(c instanceof Button)
+        	((Button)c).setTextSize(size);
+        if(c instanceof RadioButton)
+        	((RadioButton)c).setTextSize(size);
+        if(c instanceof CheckBox)
+        	((CheckBox)c).setTextSize(size);
+        if(c instanceof EditText)
+        	((EditText)c).setTextSize(size);
+        if(c instanceof EditText)
+        	((EditText)c).setTextSize(size);
+        if(c instanceof TextView)
+        	((TextView)c).setTextSize(size);
+    }
+    
+    public static int GetFontSize(Object c)
+    {
+    	if(c instanceof Button)
+        	return (int)((Button)c).getTextSize();
+        if(c instanceof RadioButton)
+        	return (int)((RadioButton)c).getTextSize();
+        if(c instanceof CheckBox)
+        	return (int)((CheckBox)c).getTextSize();
+        if(c instanceof EditText)
+        	return (int)((EditText)c).getTextSize();
+        if(c instanceof EditText)
+        	return (int)((EditText)c).getTextSize();
+        if(c instanceof TextView)
+        	return (int)((TextView)c).getTextSize();
+        
+        return 0;
+    }
+    
+    public static void SetFontFamily(Object c, String family)
+    {
+    	
+    }
+    
+    public static String GetFontFamily(Object c)
+    {
+        return "";
+    }
+    
+    public static void SetFontStyle(Object c, int style)
+    {
+        
+    }
+    
+    public static int GetFontStyle(Object c)
+    {
+        return 0;
+    }
+    
+    public static int GetDay()
+    {
+        Date date = new Date();
+        return date.getDay();
+    }
+    public static int GetMonth()
+    {
+        Date date = new Date();
+        return date.getMonth();
+    }
+    public static int GetYear()
+    {
+        Date date = new Date();
+        return date.getYear();
+    }
+    public static Date GetDate()
+    {
+        return new Date();
+    }
+    
+    public static String BooleanToString(boolean b) 
+    {
+        if (b) {
+            return "True";
+        }
+        return "False";
+    }
+
+    public static boolean StringToBoolean(String s) 
+    {
+        if (s.equals("True")) {
+            return true;
+        }
+        return false;
+     }
+
+  public static char StringToChar(String c)
+    {
+        char a = c.charAt(0);
+        return a;
+    }
+    
+    public static Date StringToDate(String c)
+    {
+        Date fecha=new Date();
+        String dia = c.charAt(0)+""+c.charAt(1);
+        String mes = c.charAt(2)+""+c.charAt(3);
+        String anio = c.charAt(4)+""+c.charAt(5)+""+c.charAt(6)+""+c.charAt(7);
+        int dian= StringToInt(dia);
+                int mesn= StringToInt(mes);
+                        int anion= StringToInt(anio);
+        fecha.setDate(dian);
+        fecha.setMonth(mesn);
+        fecha.setYear(anion);
+        
+                return fecha;
+    }    
+   
+   public static float StringToFloat(String valor)
+   {       
+       return Float.parseFloat(valor);       
+   }
+    
+   
+   public static int StringToInt(String valor)
+   {
+       return Integer.parseInt(valor);
+   }
+   
+    
+    public static int CharToInt(char c)
+    {
+        int n = c-48;
+        return n;
+    }
+    
+    
+    public static String CharToString(char c)
+    {
+        String n  = ""+c+"";
+        return n;        
+    }
+        
+    
+    public static String DateToString(Date d) 
+    {
+        return d.toString();
+    }
+
+
+    public static int FloatToInt(float valor)
+    {
+        
+        return (int)Math.round(valor);
+    }    
+    
+    public static String FloatToString(float valor)
+    {
+        return String.valueOf(Math.round(valor));
+    }    
+    
+
+    public static float IntegerToFloat(int valor)
+    {
+        float v=(float) (valor*1.0);
+        return v;
+    }    
+    
+    
+    
+    public static String IntegerToString(int valor)
+    {
+        
+        return String.valueOf(valor);
+    }    
+    
+              
+    
+    public static boolean IntegerToBoolean(Integer i) 
+    {
+        if (i == 0) {
+            return false;    
+        }
+        return true;
+    }    
+   
+    
+    
+    public static char IntegerToChar(int c)
+    {
+        char p=' ';
+       if (c >= 0 && c <= 9) {
+         p= Character.forDigit(c, 10);
+        
+        }
+       return p;
+    }    
+    
+           
+    //</editor-fold>
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de Object">        
+    public static String GetBorderColor(Object c) {
+        
+    	return "";
+        //return c.getBorderColor();
+    
+    }
+    public static void SetBorderColor(Object c,String borderColor) {
+        //c.setBorderColor(borderColor);
+    }
+
+    public static boolean IsEnabled(View c) {
+    	return c.isEnabled();
+    }
+
+    public static void SetEnabled(View c,boolean enabled) {
+    	c.setEnabled(enabled);
+    }
+
+    public static boolean IsVisible(View c) {
+    	return c.isShown();
+    }
+
+    public static void SetVisible(View c,boolean visible) {
+    	int visibility = 0;
+    	if(visible)
+    		visibility = View.VISIBLE;
+    	else
+    		visibility = View.GONE;
+    	
+    	c.setVisibility(visibility);
+    }
+
+    public static int GetHeight(View c) {
+        return c.getHeight();
+    }
+    
+    public static void SetHeight(Object c, int height) {
+    	if(c instanceof Button)
+    		((Button)c).setHeight(height);
+    	if(c instanceof CheckBox)
+    		((CheckBox)c).setHeight(height);
+    	if(c instanceof Spinner)
+    		((Spinner)c).setLayoutParams(new LayoutParams(((Spinner)c).getWidth(), height));
+    	if(c instanceof DatePicker)
+    		((DatePicker)c).setLayoutParams(new LayoutParams(((DatePicker)c).getWidth(), height));
+    	if(c instanceof TextView)
+    		((TextView)c).setHeight(height);
+    	if(c instanceof ListView)
+    		((ListView)c).setLayoutParams(new LayoutParams(((ListView)c).getWidth(), height));
+    	if(c instanceof ImageView)
+    		((ImageView)c).setLayoutParams(new LayoutParams(((ImageView)c).getWidth(), height));
+    	if(c instanceof RadioButton)
+    		((RadioButton)c).setHeight(height);
+    	if(c instanceof EditText)
+    		((EditText)c).setHeight(height);
+    	
+    	
+    }
+
+    public static int GetTabIndex(View c) {
+        return 0;
+    	//return c.getTabIndex();
+    }
+
+    public static void SetTabIndex(View c,int tabIndex) {
+        //c.setTabIndex(tabIndex);
+    }
+
+    public static int GetWidth(View c) {
+        return c.getWidth();
+    }
+    
+    public static void SetWidth(View c, int width) {
+    	if(c instanceof Button)
+    		((Button)c).setWidth(width);
+    	if(c instanceof CheckBox)
+    		((CheckBox)c).setWidth(width);
+    	if(c instanceof Spinner)
+    		((Spinner)c).setLayoutParams(new LayoutParams(width, ((Spinner)c).getHeight()));
+    	if(c instanceof DatePicker)
+    		((DatePicker)c).setLayoutParams(new LayoutParams(width, ((DatePicker)c).getHeight()));
+    	if(c instanceof TextView)
+    		((TextView)c).setWidth(width);
+    	if(c instanceof ListView)
+    		((ListView)c).setLayoutParams(new LayoutParams(width, ((ListView)c).getHeight()));
+    	if(c instanceof ImageView)
+    		((ImageView)c).setLayoutParams(new LayoutParams(width, ((ImageView)c).getHeight()));
+    	if(c instanceof RadioButton)
+    		((RadioButton)c).setWidth(width);
+    	if(c instanceof EditText)
+    		((EditText)c).setWidth(width);
+    }
+
+    public static int GetX(View c) {
+        return c.getLeft();
+    }
+
+    public static void SetX(View c,int x) {
+    	c.setPadding(x, c.getTop(), c.getRight(), c.getBottom());
+    }
+
+    public static int GetY(View c) {
+        return c.getTop();
+    }
+
+    public static void SetY(View c,int y) {
+        c.setPadding(c.getLeft(), y, c.getRight(), c.getBottom());
+    }
+    
+ // </editor-fold>     
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de Boton">    
+
+    public static String GetValue(Button btn) 
+    {
+       return btn.getText().toString(); 
+    }
+
+    public static void SetValue(Button btn,String value) {
+        btn.setText(value);
+    }           
+     // </editor-fold>    
+    
+
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de CheckBox">         
+    
+   public static int GetDirection(CheckBox c) {
+        //to do
+        //return c.getHorizontalTextPosition();
+	   return 0;
+    }
+
+    public static void SetDirection(CheckBox c,int direction) { //0 es izquierdo y 1 es derecho
+        //c.setDirection(direction);
+    }
+
+    public static String GetText(CheckBox c) {
+        return c.getText().toString();
+    }
+
+    public static void SetText(CheckBox c,String text) {
+        c.setText(text);
+    }
+
+    public static boolean IsChecked(CheckBox c) {
+        if(c.isSelected())
+        {
+        return true;
+        }else{
+        
+        return false;
+        }
+        
+    }
+
+    public static void SetChecked(CheckBox c,boolean checked) {
+        c.setSelected(checked);
+    }    
+    
+   // </editor-fold> 
+    
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de Combobox">        
+    public static String[] GetItems(Spinner cmb) 
+    {
+       String items[] = new String[cmb.getCount()]; 
+       for ( int i = 0;  i < cmb.getCount(); i++) 
+       {
+            items[i] = cmb.getItemAtPosition(i).toString();
+       }           
+      return items;  
+    }
+
+    public static void SetItems(Context context, Spinner spinner,String[] items) 
+    {
+    	ArrayAdapter<String> adapter = new ArrayAdapter<String>
+    		(context, android.R.layout.simple_spinner_dropdown_item, items);
+    	
+    	spinner.setAdapter(adapter);
+    }
+
+    public static int GetSelectedIndex(Spinner cmb,int n) 
+    {
+       return cmb.getSelectedItemPosition();               
+    }
+
+    public static void SetSelectedIndex(Spinner cmb,int selectedIndex) 
+    {        
+        cmb.setSelection(selectedIndex);
+    }
+
+ 
+    public static void SetSelectedItem(Spinner cmb,Object selectedItem) 
+    {
+        //cmb.setSelectedItem(selectedItem);                
+    }
+    
+    public static Object GetSelectedItem(Spinner cmb,Object n) 
+    {
+    	n = cmb.getSelectedItem();
+    	return cmb.getSelectedItem();
+       //cmb.setSelectedItem(n);
+       //return n;     
+    }        
+    
+    
+    // </editor-fold>     
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de DatePicker">            
+    public static String GetDateFormat(DatePicker datePicker) {
+        return "";
+    }
+
+    public static void SetDateFormat(DatePicker datePicker, String dateFormat) {
+        //TODO
+    	
+    }
+
+    public static Date GetMinValue(DatePicker d) {
+        //
+    	return new Date();
+    }
+
+    public static void SetMinValue(DatePicker d, Date minValue) {
+        //TODO
+    }
+
+    public static Date GetValue(DatePicker d) {
+        int day = d.getDayOfMonth();
+        int month = d.getMonth();
+        int year = d.getYear();
+        
+        return new Date(year,month,day);
+    }
+    
+// </editor-fold>    
+
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de Label">            
+     public static String GetValue(TextView l) {
+        return l.getText().toString();
+    }
+
+    public static void SetValue(TextView l,String value) {
+        l.setText(value);
+    }    
+    
+// </editor-fold>   
+    
+    // <editor-fold defaultstate="collapsed" desc="Funcion build in de Listbox">        
+    public static String[] GetItems(ListView cmb) 
+    {
+    	String[] items = new String[cmb.getCount()];
+    	
+    	for(int i=0; i<cmb.getCount(); i++){
+    		items[i] = cmb.getChildAt(i).toString();    		
+    	}
+    	
+    	return items;
+    }
+
+    public static void SetItems(Context context, ListView c,String items[]) 
+    {
+    	ArrayAdapter<String> adapter = new ArrayAdapter<String>
+		(context, android.R.layout.simple_spinner_dropdown_item, items);
+	
+    	c.setAdapter(adapter);
+    }
+
+    public static int GetSelectedIndex(ListView cmb) 
+    {
+       return cmb.getSelectedItemPosition();           
+    }
+
+    public static void SetSelectedIndex(ListView cmb,int selectedIndex) 
+    {        
+        cmb.setItemChecked(selectedIndex, true);
+    }
+
+ 
+    public static void SetSelectedItem(ListView cmb,Object selectedItem) 
+    {
+        //cmb.setSelectedItem(selectedItem);                
+    }
+    
+    public static String GetSelectedItem(ListView cmb) 
+    {
+       return cmb.getSelectedItem().toString();     
+    }        
+    
+    
+    // </editor-fold>  
+    
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de Picture">                
+    public static String GetPath(ImageView i) {
+        return "";
+    }
+
+    public static void SetPath(ImageView i, String path) {
+        //TODO
+    }
+
+    public static int GetSizeType(ImageView i) {
+        return 0;
+    }
+
+    public static void SetSizeType(int sizeType) {
+        //TODO
+    }    
+
+    
+ // </editor-fold>   
+    
+    
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de RadioButton">                    
+  
+    public static int GetDirection(RadioButton r) {
+        return 0;
+    }
+
+    public static void SetDirection(RadioButton r,int direction) { //0 es izquierdo y 1 es derecho
+        //r.setHorizontalTextPosition(direction);
+    }
+
+    public static String GetText(RadioButton r) {
+        return r.getText().toString();
+    }
+
+    public static void SetText(RadioButton r,String text) {
+       r.setText(text);
+    }
+
+    public static boolean IsChecked(RadioButton r) {
+         if(r.isSelected())
+        {
+        return true;
+        }else{
+        
+        return false;
+        }
+    }
+
+    public static void SetChecked(RadioButton r,boolean checked) {
+      r.setSelected(checked);
+    }
+    
+    //</editor-fold>
+    
+    
+    
+ 
+     // <editor-fold defaultstate="collapsed" desc="Funcion build in de Textbox">                
+    public static boolean IsReadOnly(EditText t) {
+        return t.isEnabled();
+    }
+
+    public static void SetReadOnly(EditText t,boolean readOnly) {
+        t.setEnabled(readOnly);
+    }
+ 
+
+    public static String GetValue(EditText t) {
+        return t.getText().toString();
+    }
+
+    public static void SetValue(EditText t,String value) {
+        t.setText(value);
+    }
+    
+    //</editor-fold> 
+    
+    public static String GetTitle(Activity window) {
+        return window.getTitle().toString();
+    }
+
+    public static void setTitle(Activity window, String title) {
+        window.setTitle(title);
+    }
+    
+}
+
